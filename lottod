@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+one=$(uuidgen)
+two=$(uuidgen)
+
+printf "\e[34mspinning the wheel:\e[0m\n\n"
+printf " - $one\n"
+sleep 0.1
+printf " - $two\n\n"
+
+if [[ $one == $two ]]; then 
+    printf "\e[32mYOU WIN\e[0m\n"
+    exit 0
+fi
+
+printf "\e[31m$(curl -s https://mybadbro.stevemccroskey.com)\e[0m\n"

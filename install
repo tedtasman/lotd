@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
+SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+NAME="${SCRIPT_DIR##*/}" 
+
+# install in ~/.local/bin
+mkdir -p ~/.local/bin
+ln -s "$SCRIPT_DIR/lottod" "$HOME/.local/bin/lottod" && printf "lottod installed at ~/.local/bin/lottod\n"
+
+
+
+# ~/.local/bin to PATH if not there
+if ! [[ ":$PATH:" == *":$HOME/.local/bin:"* ]] && ! grep -q '$HOME/.local/bin' ~/.bashrc; then
+    cat >> ~/.bashrc <<'EOF'
+
+# lottod - add ~/.local/bin to PATH
+case ":$PATH:" in
+    *":$HOME/.local/bin:"*) ;;
+    *) export PATH="$HOME/.local/bin:$PATH" ;;
+esac
+EOF
+
+    . "$HOME/.bashrc" && printf "~/.local/bin/ added to PATH\n"
+fi
+
+if [ -e "$HOME/.config/$NAME" ]; then
+    printf "$NAME already exists in ~/.config\n"
+    exit 1
+fi
+
+ln -s "$SCRIPT_DIR" "$HOME/.config/$NAME" && printf "$NAME config installed\n"
