@@ -11,6 +11,7 @@ Generates 2 uuids. If they're the same, you win.
 ```bash
 curl -fsSL https://raw.githubusercontent.com/tedtasman/lotd/main/remote-installer.sh | bash
 ```
+*Don't execute code you haven't read or don't trust!*
 
 ### Developer:
 
