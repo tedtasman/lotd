@@ -5,7 +5,7 @@ NAME="${SCRIPT_DIR##*/}"
 
 # install in ~/.local/bin
 mkdir -p ~/.local/bin
-ln -s "$SCRIPT_DIR/lottod" "$HOME/.local/bin/lottod" && printf "lottod installed at ~/.local/bin/lottod\n"
+ln -s "$SCRIPT_DIR/lotd-now" "$HOME/.local/bin/lotd-now" && printf "lotd-now installed at ~/.local/bin/lotd-now\n"
 
 
 
@@ -13,7 +13,7 @@ ln -s "$SCRIPT_DIR/lottod" "$HOME/.local/bin/lottod" && printf "lottod installed
 if ! [[ ":$PATH:" == *":$HOME/.local/bin:"* ]] && ! grep -q '$HOME/.local/bin' ~/.bashrc; then
     cat >> ~/.bashrc <<'EOF'
 
-# lottod - add ~/.local/bin to PATH
+# lotd-now - add ~/.local/bin to PATH
 case ":$PATH:" in
     *":$HOME/.local/bin:"*) ;;
     *) export PATH="$HOME/.local/bin:$PATH" ;;
@@ -23,9 +23,7 @@ EOF
     . "$HOME/.bashrc" && printf "~/.local/bin/ added to PATH\n"
 fi
 
-if [ -e "$HOME/.config/$NAME" ]; then
-    printf "$NAME already exists in ~/.config\n"
-    exit 1
-fi
+! [[ -e /etc/update-motd.d ]] && echo "Failed to add lotd to Message of the Day, /etc/update-motd.d missing" && exit 1
 
-ln -s "$SCRIPT_DIR" "$HOME/.config/$NAME" && printf "$NAME config installed\n"
+echo "Authorize write to /etc/update-motd.d:"
+sudo ln -s "$SCRIPT_DIR/lotd-now" "/etc/update-motd.d/1000-lotd" && echo "Lottery of the Day added to Message of the Day"
