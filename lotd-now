@@ -20,7 +20,7 @@ apology=${apology:0:$WIDTH}
 apology_line=$(printf '\e[31;3m%s\e[0m' "$(align "$apology")")
 [[ $one == $two ]] && apology_line=$(printf '\e[32;3m%s\e[0m' "$(align "YOU WIN")")
 
-header=$(printf '\e[33m%s\e[0m' "$(align 'Lottery of the day:')")
+header=$(printf '\e[33m%s\e[0m' "$(align 'Lottery of the Day:')")
 rule=$(printf '─%.0s' $(seq "$WIDTH"))
 
 printf '\n'
