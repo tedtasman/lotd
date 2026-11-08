@@ -32,3 +32,5 @@ fi
 
 echo "Authorize write to $MOTD_DIR:"
 sudo install -m 755 "$TARGET" "$MOTD_FILE" && echo "Lottery of the Day added to Message of the Day"
+
+printf "\nLottery will now run at login. Run lotd-now to try your luck on demand\n"
