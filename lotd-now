@@ -1,15 +1,37 @@
 #!/usr/bin/env bash
+export LC_ALL=C.UTF-8
+
+WIDTH=42
+align() {
+    local text=$1 len=${#1}
+    local left=3
+    local right=$(( WIDTH - len - left ))
+    printf '%*s%s%*s' "$left" '' "$text" "$right" ''
+}
+
 one=$(uuidgen)
 two=$(uuidgen)
 
-printf "\e[34mspinning the wheel:\e[0m\n\n"
-printf " - $one\n"
-sleep 0.1
-printf " - $two\n\n"
+apology=$(curl -s --max-time 5 https://mybadbro.stevemccroskey.com | tr -d '\r' | tr '\n' ' ' | tr -s ' ')
+[[ -z $apology ]] && apology="Sorry."
+apology=${apology:0:$WIDTH}
 
-if [[ $one == $two ]]; then 
-    printf "\e[32mYOU WIN\e[0m\n"
-    exit 0
-fi
 
-printf "\e[31m$(curl -s https://mybadbro.stevemccroskey.com)\e[0m\n"
+apology_line=$(printf '\e[31;3m%s\e[0m' "$(align "$apology")")
+[[ $one == $two ]] && apology_line=$(printf '\e[32;3m%s\e[0m' "$(align "YOU WIN")")
+
+header=$(printf '\e[33m%s\e[0m' "$(align 'Lottery of the day:')")
+rule=$(printf '─%.0s' $(seq "$WIDTH"))
+
+printf '\n'
+printf '  ╭%s╮\n' "$rule"
+printf '  │%*s│\n' "$WIDTH" ''
+printf '  │%s│\n' "$header"
+printf '  │%*s│\n' "$WIDTH" ''
+printf '  │%s│\n' "$(align "$one")"
+printf '  │%s│\n' "$(align "$two")"
+printf '  │%*s│\n' "$WIDTH" ''
+printf '  │%s│\n' "$apology_line"
+printf '  │%*s│\n' "$WIDTH" ''
+printf '  ╰%s╯\n' "$rule"
+printf '\n'
