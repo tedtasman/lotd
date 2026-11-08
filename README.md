@@ -9,7 +9,7 @@ Generates 2 uuids. If they're the same, you win.
 curl -fsSL https://raw.githubusercontent.com/tedtasman/lotd/main/remote-installer.sh | bash
 ```
 
-### Editable:
+### Developer:
 
 ```bash
 git clone https://github.com/tedtasman/lotd.git
